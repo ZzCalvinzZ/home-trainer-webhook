@@ -15,9 +15,13 @@ router.post("/", function(req, res, next) {
     const numbers = getNumbers(res, digits);
 
     res.json({
-      payload: {
-        number1: numbers[0],
-        number2: numbers[1]
+      followupEventInput: {
+        name: "math_training_say_numbers",
+        parameters: {
+          number1: numbers[0],
+          number2: numbers[1]
+        },
+        languageCode: "en-US"
       }
     });
   } else {
