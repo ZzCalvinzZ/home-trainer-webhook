@@ -10,13 +10,8 @@ router.post("/", function(req, res, next) {
   const action = get(queryResult, ["action"], "");
   const displayName = get(queryResult, ["intent", "displayName"], "");
 
-  if (displayName === "math_training_get_type") {
-    const { digits } = get(queryResult, ["parameters"], {});
-    const { trainingType } = get(
-      queryResult,
-      ["outputContexts", "0", "parameters"],
-      {}
-    );
+  if (action === "math_training_get_numbers") {
+    const { digits, trainingType } = get(queryResult, ["parameters"], {});
     const numbers = getNumbers(res, digits);
 
     const trainingTypeMap = {
