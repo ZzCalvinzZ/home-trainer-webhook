@@ -14,7 +14,11 @@ router.post("/", function(req, res, next) {
     {}
   );
 
-  if (action === "math_training_get_numbers") {
+  if (
+    ["math_training_get_numbers", "math_training_correct_solution"].includes(
+      action
+    )
+  ) {
     const numbers = getNumbers(res, digits);
 
     const conjunctionMap = {
