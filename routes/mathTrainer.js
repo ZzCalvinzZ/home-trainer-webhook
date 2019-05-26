@@ -11,9 +11,16 @@ router.post("/", function(req, res, next) {
   const displayName = get(queryResult, ["intent", "displayName"], "");
 
   if (action === "math_training_get_numbers") {
-    const outputContext = get(queryResult, ["outputContexts", "0"], {});
+    const outputContext = get(queryResult,
+      ["outputContexts", "0"],
+      {}
+    );
 
-    const { trainingType, digits } = get(outputContext, ["parameters"], {});
+    const { trainingType, digits } = get(
+      outputContext,
+      ["parameters"],
+      {}
+    );
 
     const numbers = getNumbers(res, digits);
 
@@ -25,15 +32,12 @@ router.post("/", function(req, res, next) {
     };
 
     res.json({
-      outputContexts: [
-        {
-          ...outputContext,
-          number1: numbers[0],
-          number2: numbers[1]
-        }
-      ],
       followupEventInput: {
         name: trainingTypeMap[trainingType],
+        parameters: {
+          number1: numbers[0],
+          number2: numbers[1]
+        },
         languageCode: "en"
       }
     });
