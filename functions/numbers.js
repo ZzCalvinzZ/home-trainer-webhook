@@ -6,7 +6,7 @@ const getNumbers = (digits, trainingType) => {
   const n2 = getNumber();
 
   const highNumber = n1 > n2 ? n1 : n2;
-  const lowNumber = n2 >= n1 ? n2 : n1;
+  const lowNumber = n1 > n2 ? n2 : n1;
 
   if (["subtraction", "division"].includes(trainingType)) {
     return {

@@ -34,11 +34,10 @@ router.post("/", function(req, res, next) {
       }
     });
   } else if (action === "math_training_say_solution") {
-    console.log("blumbo", trainingType, number1, number2, userSolution, digits);
     const solution = solve(trainingType, number1, number2);
     const correct = solution === userSolution;
     const numbers = correct
-      ? getNumbers(res, digits)
+      ? getNumbers(digits, trainingType)
       : { number1, number2 };
 
     res.json({
