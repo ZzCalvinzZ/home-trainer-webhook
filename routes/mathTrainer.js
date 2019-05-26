@@ -13,20 +13,15 @@ router.post("/", function(req, res, next) {
     ["parameters"],
     {}
   );
+  const conjunctionMap = {
+    addition: "plus",
+    subtraction: "minus",
+    multiplication: "times",
+    division: "divided by"
+  };
 
-  if (
-    ["math_training_get_numbers", "math_training_correct_solution"].includes(
-      action
-    )
-  ) {
+  if (action === "math_training_get_numbers") {
     const numbers = getNumbers(res, digits);
-
-    const conjunctionMap = {
-      addition: "plus",
-      subtraction: "minus",
-      multiplication: "times",
-      division: "divided by"
-    };
 
     res.json({
       followupEventInput: {
@@ -43,6 +38,7 @@ router.post("/", function(req, res, next) {
     console.log("blumbo", trainingType, number1, number2, userSolution);
     const solution = solve(trainingType, number1, number2);
     const correct = solution === userSolution;
+    const numbers = getNumbers(res, digits);
 
     res.json({
       followupEventInput: {
@@ -50,6 +46,9 @@ router.post("/", function(req, res, next) {
           ? "math_training_correct_solution"
           : "math_training_incorrect_solution",
         parameters: {
+          number1: numbers[0],
+          number2: numbers[1],
+          conjunction: conjunctionMap[trainingType],
           solution: String(solution)
         },
         languageCode: "en"
