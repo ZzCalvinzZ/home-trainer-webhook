@@ -6,10 +6,10 @@ var router = express.Router();
 /* GET home page. */
 router.post("/", function(req, res, next) {
   const queryResult = get(req, ["body", "queryResult"], {});
+  const action = get(queryResult, ["action"], "");
   const displayName = get(queryResult, ["intent", "displayName"], "");
 
-  console.log(queryResult);
-  if (displayName === "math_training_get_numbers") {
+  if (action === "math_training_get_numbers") {
     const { digits } = get(queryResult, ["parameters"], {});
     const { trainingType } = get(
       queryResult,
