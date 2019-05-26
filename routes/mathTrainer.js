@@ -5,6 +5,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.post("/", function(req, res, next) {
+  console.log(req.body);
   const queryResult = get(req, ["body", "queryResult"], {});
   const action = get(queryResult, ["action"], "");
   const displayName = get(queryResult, ["intent", "displayName"], "");
