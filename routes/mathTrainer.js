@@ -17,13 +17,6 @@ router.post("/", function(req, res, next) {
   if (action === "math_training_get_numbers") {
     const numbers = getNumbers(res, digits);
 
-    const trainingTypeMap = {
-      addition: "math_training_say_add_numbers",
-      subtraction: "math_training_say_subtract_numbers",
-      multiplication: "math_training_say_multiply_numbers",
-      division: "math_training_say_divide_numbers"
-    };
-
     const conjunctionMap = {
       addition: "plus",
       subtraction: "minus",
@@ -33,7 +26,7 @@ router.post("/", function(req, res, next) {
 
     res.json({
       followupEventInput: {
-        name: trainingTypeMap[trainingType],
+        name: "math_training_say_add_numbers",
         parameters: {
           conjunction: conjunctionMap[trainingType],
           number1: numbers[0],
