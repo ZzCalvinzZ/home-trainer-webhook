@@ -21,7 +21,7 @@ router.post("/", function(req, res, next) {
   };
 
   if (action === "math_training_get_numbers") {
-    const numbers = getNumbers(res, digits);
+    const {number1, number2} = getNumbers(digits, trainingType);
 
     res.json({
       followupEventInput: {
@@ -38,7 +38,7 @@ router.post("/", function(req, res, next) {
     console.log("blumbo", trainingType, number1, number2, userSolution);
     const solution = solve(trainingType, number1, number2);
     const correct = solution === userSolution;
-    const numbers = correct ? getNumbers(res, digits) : [number1, number2];
+    const numbers = correct ? getNumbers(res, digits) : {number1, number2};
 
     res.json({
       followupEventInput: {
@@ -46,8 +46,8 @@ router.post("/", function(req, res, next) {
           ? "math_training_correct_solution"
           : "math_training_incorrect_solution",
         parameters: {
-          number1: numbers[0],
-          number2: numbers[1],
+          number1: numbers.number1,
+          number2: numbers.number2,
           conjunction: conjunctionMap[trainingType],
           solution: String(solution)
         },
