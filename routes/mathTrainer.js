@@ -27,14 +27,6 @@ router.post("/", function(req, res, next) {
 
     res.json({
       followupEventInput: {
-        payload: {
-          google: {
-            userStorage: {
-              number1: numbers[0],
-              number2: numbers[1]
-            }
-          }
-        },
         name: trainingTypeMap[trainingType],
         parameters: {
           number1: numbers[0],
