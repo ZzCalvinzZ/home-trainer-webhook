@@ -10,7 +10,8 @@ router.post("/", function(req, res, next) {
 
   console.log(queryResult);
   if (displayName === "math_training_get_numbers") {
-    const { trainingType, digits } = get(
+    const { digits } = get(queryResult, ["parameters"], {});
+    const { trainingType } = get(
       queryResult,
       ["outputContexts", "0", "parameters"],
       {}
@@ -35,7 +36,7 @@ router.post("/", function(req, res, next) {
       }
     });
   } else if (displayName === "math_training_say_solution") {
-    const { trainingType, number1, number2, userSolution} = get(
+    const { trainingType, number1, number2, userSolution } = get(
       queryResult,
       ["outputContexts", "0", "parameters"],
       {}
@@ -43,18 +44,17 @@ router.post("/", function(req, res, next) {
     const solution = solve(trainingType, number1, number2);
     const correct = solution === userSolution;
 
-
     res.json({
       followupEventInput: {
-        name: correct ? "math_training_correct_solution" : "math_training_incorrect_solution",
+        name: correct
+          ? "math_training_correct_solution"
+          : "math_training_incorrect_solution",
         parameters: {
           solution: solution
         },
         languageCode: "en"
       }
     });
-
-
   } else {
     res.status(404).json({ error: "Invalid Intent name!" });
   }
