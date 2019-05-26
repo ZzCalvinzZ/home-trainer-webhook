@@ -1,19 +1,23 @@
 const getNumbers = (res, digits) => {
-  const getNumber = () => parseInt(Math.random() / Math.pow(10, -digits));
+  const d = parseInt(digits)
+  const getNumber = () => String(parseInt(Math.random() / Math.pow(10, -d)));
 
   return [getNumber(), getNumber()];
 };
 
 const solve = (trainingType, number1, number2) => {
+  const n1 = parseInt(number1)
+  const n2 = parseInt(number2)
+
   switch (trainingType) {
     case "addition":
-      return number1 + number2;
+      return n1 + n2;
     case "subtraction":
-      return number1 - number2;
+      return n1 - n2;
     case "multiplication":
-      return number1 * number2;
+      return n1 * n2;
     case "division":
-      return number1 / number2;
+      return n1 / n2;
   }
 };
 

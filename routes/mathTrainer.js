@@ -45,7 +45,7 @@ router.post("/", function(req, res, next) {
           ? "math_training_correct_solution"
           : "math_training_incorrect_solution",
         parameters: {
-          solution: solution
+          solution: String(solution)
         },
         languageCode: "en"
       }
