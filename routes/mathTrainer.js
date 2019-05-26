@@ -24,10 +24,18 @@ router.post("/", function(req, res, next) {
       division: "math_training_say_divide_numbers"
     };
 
+    const conjunctionMap = {
+      addition: "plus",
+      subtraction: "minus",
+      multiplication: "times",
+      division: "divided by"
+    };
+
     res.json({
       followupEventInput: {
         name: trainingTypeMap[trainingType],
         parameters: {
+          conjunction: conjunctionMap[trainingType],
           number1: numbers[0],
           number2: numbers[1]
         },
