@@ -1,5 +1,5 @@
 const getNumbers = (res, digits) => {
-  const getNumber = () => Math.floor(Math.random() / Math.pow(10, -digits));
+  const getNumber = () => parseInt(Math.random() / Math.pow(10, -digits));
 
   return [getNumber(), getNumber()];
 };
