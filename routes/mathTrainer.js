@@ -11,13 +11,24 @@ router.post("/", function(req, res, next) {
 
   console.log(queryResult);
   if (displayName === "math_training_get_numbers") {
-    const { digits } = get(queryResult, ["parameters"], {});
+    const { trainingType, digits } = get(
+      queryResult,
+      ["outputContexts", "0", "parameters"],
+      {}
+    );
     const numbers = getNumbers(res, digits);
+
+    const trainingTypeMap = {
+      addition: "math_training_say_add_numbers",
+      subtraction: "math_training_say_subtract_numbers",
+      multiplication: "math_training_say_multiply_numbers",
+      division: "math_training_say_divide_numbers"
+    };
 
     res.json({
       payload: {},
       followupEventInput: {
-        name: "math_training_say_numbers",
+        name: trainingTypeMap[trainingType],
         parameters: {
           number1: numbers[0],
           number2: numbers[1]
