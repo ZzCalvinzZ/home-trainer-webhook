@@ -38,7 +38,7 @@ router.post("/", function(req, res, next) {
     console.log("blumbo", trainingType, number1, number2, userSolution);
     const solution = solve(trainingType, number1, number2);
     const correct = solution === userSolution;
-    const numbers = getNumbers(res, digits);
+    const numbers = correct ? getNumbers(res, digits) : [number1, number2];
 
     res.json({
       followupEventInput: {
