@@ -46,6 +46,7 @@ router.post("/", function(req, res, next) {
       ["outputContexts", "0", "parameters"],
       {}
     );
+    console.log('blumbo', trainingType, number1, number2, userSolution);
     const solution = solve(trainingType, number1, number2);
     const correct = solution === userSolution;
 
