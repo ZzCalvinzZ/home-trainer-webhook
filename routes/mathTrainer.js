@@ -1,7 +1,6 @@
 var express = require("express");
 var get = require("lodash.get");
-var { solveAddition } = require("../functions/addition");
-var { getNumbers } = require("../functions/numbers");
+var { getNumbers, solve } = require("../functions/numbers");
 var router = express.Router();
 
 /* GET home page. */
@@ -26,7 +25,6 @@ router.post("/", function(req, res, next) {
     };
 
     res.json({
-      payload: {},
       followupEventInput: {
         name: trainingTypeMap[trainingType],
         parameters: {
@@ -36,6 +34,27 @@ router.post("/", function(req, res, next) {
         languageCode: "en"
       }
     });
+  } else if (displayName === "math_training_say_solution") {
+    const { trainingType, number1, number2, userSolution} = get(
+      queryResult,
+      ["outputContexts", "0", "parameters"],
+      {}
+    );
+    const solution = solve(trainingType, number1, number2);
+    const correct = solution === userSolution;
+
+
+    res.json({
+      followupEventInput: {
+        name: correct ? "math_training_correct_solution" : "math_training_incorrect_solution",
+        parameters: {
+          solution: solution
+        },
+        languageCode: "en"
+      }
+    });
+
+
   } else {
     res.status(404).json({ error: "Invalid Intent name!" });
   }

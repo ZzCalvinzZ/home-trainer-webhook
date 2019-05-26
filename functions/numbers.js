@@ -4,4 +4,17 @@ const getNumbers = (res, digits) => {
   return [getNumber(), getNumber()];
 };
 
-module.exports = { getNumbers };
+const solve = (trainingType, number1, number2) => {
+  switch (trainingType) {
+    case "addition":
+      return number1 + number2;
+    case "subtraction":
+      return number1 - number2;
+    case "multiplication":
+      return number1 * number2;
+    case "division":
+      return number1 / number2;
+  }
+};
+
+module.exports = { getNumbers, solve };
