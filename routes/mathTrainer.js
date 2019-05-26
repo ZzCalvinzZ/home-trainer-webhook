@@ -5,7 +5,6 @@ var router = express.Router();
 
 /* GET home page. */
 router.post("/", function(req, res, next) {
-  console.log(req.body);
   const queryResult = get(req, ["body", "queryResult"], {});
   const action = get(queryResult, ["action"], "");
   const { trainingType, digits, number1, number2, userSolution } = get(
@@ -21,15 +20,15 @@ router.post("/", function(req, res, next) {
   };
 
   if (action === "math_training_get_numbers") {
-    const { number1, number2 } = getNumbers(digits, trainingType);
+    const numbers = getNumbers(digits, trainingType);
 
     res.json({
       followupEventInput: {
         name: "math_training_say_add_numbers",
         parameters: {
           conjunction: conjunctionMap[trainingType],
-          number1,
-          number2
+          number1: numbers.number1,
+          number2: numbers.number2
         },
         languageCode: "en"
       }
@@ -38,7 +37,7 @@ router.post("/", function(req, res, next) {
     console.log("blumbo", trainingType, number1, number2, userSolution);
     const solution = solve(trainingType, number1, number2);
     const correct = solution === userSolution;
-    const { number1, number2 } = correct
+    const numbers = correct
       ? getNumbers(res, digits)
       : { number1, number2 };
 
@@ -48,8 +47,8 @@ router.post("/", function(req, res, next) {
           ? "math_training_correct_solution"
           : "math_training_incorrect_solution",
         parameters: {
-          number1: number1,
-          number2: number2,
+          number1: numbers.number1,
+          number2: numbers.number2,
           conjunction: conjunctionMap[trainingType],
           solution: String(solution)
         },
