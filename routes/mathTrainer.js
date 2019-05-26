@@ -8,7 +8,6 @@ router.post("/", function(req, res, next) {
   console.log(req.body);
   const queryResult = get(req, ["body", "queryResult"], {});
   const action = get(queryResult, ["action"], "");
-  const displayName = get(queryResult, ["intent", "displayName"], "");
 
   if (action === "math_training_get_numbers") {
     const outputContext = get(queryResult,
@@ -41,7 +40,7 @@ router.post("/", function(req, res, next) {
         languageCode: "en"
       }
     });
-  } else if (displayName === "math_training_say_solution") {
+  } else if (action === "math_training_say_solution") {
     const { trainingType, number1, number2, userSolution } = get(
       queryResult,
       ["outputContexts", "0", "parameters"],
