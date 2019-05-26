@@ -8,19 +8,13 @@ router.post("/", function(req, res, next) {
   console.log(req.body);
   const queryResult = get(req, ["body", "queryResult"], {});
   const action = get(queryResult, ["action"], "");
+  const { trainingType, digits, number1, number2, userSolution } = get(
+    queryResult,
+    ["parameters"],
+    {}
+  );
 
   if (action === "math_training_get_numbers") {
-    const outputContext = get(queryResult,
-      ["outputContexts", "0"],
-      {}
-    );
-
-    const { trainingType, digits } = get(
-      outputContext,
-      ["parameters"],
-      {}
-    );
-
     const numbers = getNumbers(res, digits);
 
     const trainingTypeMap = {
@@ -41,12 +35,7 @@ router.post("/", function(req, res, next) {
       }
     });
   } else if (action === "math_training_say_solution") {
-    const { trainingType, number1, number2, userSolution } = get(
-      queryResult,
-      ["outputContexts", "0", "parameters"],
-      {}
-    );
-    console.log('blumbo', trainingType, number1, number2, userSolution);
+    console.log("blumbo", trainingType, number1, number2, userSolution);
     const solution = solve(trainingType, number1, number2);
     const correct = solution === userSolution;
 
